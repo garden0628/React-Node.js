@@ -3,6 +3,7 @@ const { default: mongoose } = require('mongoose')
 const app = express()
 const port = 3000
 const bodyParser = require('body-parser')
+const config = require('./config/key')
 const { User } = require('./models/user')
 
 // application/x-www-form-urlencoded
@@ -13,12 +14,13 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 mongoose.set("strictQuery", false)
-mongoose.connect('[Information]')
+// mongoose.connect('[Information]')
+mongoose.connect(config.mongoURI)
 .then(() => console.log('MongoDB connected...'))
 .catch(err => console.log(err))
 
 app.get('/', (req, res) => {
-    res.send('Hello World')
+    res.send('Hello World!')
 })
 
 app.post('/register', (req, res) => {
